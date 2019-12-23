@@ -1,8 +1,18 @@
 import java.time.LocalDateTime
+import java.time.LocalDate
+import java.time.ZoneOffset
+import java.time.Instant
 
-class Gigasecond {
+class Gigasecond (val moment: LocalDateTime) {
 
-    // TODO: Implement proper constructor
+    constructor(momentAsLocalDate: LocalDate) : this(momentAsLocalDate.atStartOfDay())
 
-    val date: LocalDateTime = TODO("Implement this getter to complete the task")
+    val date: LocalDateTime
+        get() {
+            var seconds = moment.toEpochSecond(ZoneOffset.UTC)
+            
+            seconds += 1000000000
+
+            return LocalDateTime.ofInstant(Instant.ofEpochSecond(seconds), ZoneOffset.UTC)
+        }
 }
